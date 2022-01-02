@@ -2,6 +2,7 @@ import { Crud, EditButton, Modal } from '@sefirosweb/react-crud'
 import { useEffect, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 import cron_expresion from '../images/cron_expresion.gif'
+import toastr from "toastr";
 
 const Cronjob = () => {
 
@@ -23,19 +24,18 @@ const Cronjob = () => {
     }
 
     useEffect(() => {
-        console.log('start timer')
         setPreviewCron('')
         if (inputCroExpresion === '') {
             return
         }
 
         const timer = setTimeout(() => {
-            console.log('trigered timer')
             axios.post(`${APP_URL}/cronjobs/preview_job`, { inputCroExpresion })
                 .then((request) => {
                     const responseData = request.data.data
                     const success = request.data.success
                     if (success) {
+                        toastr.clear();
                         setPreviewCron(responseData)
                     }
                 })
@@ -74,6 +74,12 @@ const Cronjob = () => {
             </Form>
         </>
     )
+
+    const onExitModal = () => {
+        // crudRef.current.refreshTable()
+        setInputCroExpresion('')
+        setPreviewCron('')
+    }
 
     return (
         <>
@@ -143,6 +149,7 @@ const Cronjob = () => {
                 body={modalBody}
                 handleAccept={handleAcceptModalCron}
                 isLoading={isLoading}
+                onExited={onExitModal}
             />
         </>
     );
