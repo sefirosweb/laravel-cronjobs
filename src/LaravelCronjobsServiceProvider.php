@@ -2,7 +2,9 @@
 
 namespace Sefirosweb\LaravelCronjobs;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
+use Sefirosweb\LaravelCronjobs\Commands\RunPendinJobs;
 
 class LaravelCronjobsServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,15 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../public' => public_path('vendor/laravel-cronjobs'),
         ], 'laravel-cronjobs-view');
+
+        $this->commands([
+            RunPendinJobs::class,
+        ]);
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('runpendingjobs')->everyMinute();
+        });
     }
 
     public function register()
