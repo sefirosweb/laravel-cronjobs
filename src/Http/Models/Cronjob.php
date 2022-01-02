@@ -10,7 +10,8 @@ class Cronjob extends Model
     protected $fillable = [
         'name',
         'description',
-        'command',
+        'function',
+        'controller',
         'cron_expression',
         'next_run_at',
         'last_run_at',

@@ -17,7 +17,8 @@ class CreateCronjobsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->string('command');
+            $table->string('function');
+            $table->string('controller');
             $table->string('cron_expression')->default('');
             $table->string('message')->default('');
             $table->boolean('is_active')->default(0);;

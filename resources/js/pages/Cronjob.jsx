@@ -90,6 +90,15 @@ const Cronjob = () => {
         setPreviewCron('')
     }
 
+    const handlePlayCron = (row, key) => {
+        // crudRef.current.setIsLoadingTable(true)
+        axios.post(`${APP_URL}/cronjobs/execute_job`, { id: key })
+            .then(() => {
+                // crudRef.current.setIsLoadingTable(false)
+            })
+        // .catch(() => crudRef.current.setIsLoadingTable(false))
+    }
+
     return (
         <>
             <h1>Cronjobs</h1>
@@ -125,9 +134,17 @@ const Cronjob = () => {
                         type: 'textarea'
                     },
                     {
-                        accessor: 'command',
-                        titleOnCRUD: 'Command',
-                        Header: 'Command',
+                        accessor: 'function',
+                        titleOnCRUD: 'Function',
+                        Header: 'Function',
+                        editable: true,
+                        sortable: true,
+                        type: 'text'
+                    },
+                    {
+                        accessor: 'controller',
+                        titleOnCRUD: 'Controller',
+                        Header: 'Controller',
                         editable: true,
                         sortable: true,
                         type: 'text'
@@ -150,7 +167,7 @@ const Cronjob = () => {
                     {
                         Header: 'Run Cron',
                         accessor: 'run_cron',
-                        Cell: row => <PlayButton onClick={() => handleModalShow(row.cell.row.original, row.cell.row.original.id)}></PlayButton>
+                        Cell: row => <PlayButton onClick={() => handlePlayCron(row.cell.row.original, row.cell.row.original.id)}></PlayButton>
                     }
                 ]}
             />

@@ -35,7 +35,12 @@ class CronjobRequest extends FormRequest
                 'min:3',
                 'max:255',
             ],
-            'command' => [
+            'function' => [
+                'required',
+                'min:3',
+                'max:255',
+            ],
+            'controller' => [
                 'required',
                 'min:3',
                 'max:255',
