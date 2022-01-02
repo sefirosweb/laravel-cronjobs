@@ -1,0 +1,26 @@
+{
+    "name": "sefirosweb/laravel-cronjobs",
+    "description": "Package for made and modify easly the cronjob system",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Sefirosweb\\LaravelCronjobs\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sefirosweb",
+            "email": "sefirosweb@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sefirosweb\\LaravelCronjobs\\LaravelCronjobsServiceProvider"
+            ]
+        }
+    }
+}
