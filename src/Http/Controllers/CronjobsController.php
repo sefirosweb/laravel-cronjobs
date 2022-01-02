@@ -102,8 +102,7 @@ class CronjobsController extends Controller
     {
         $job = Cronjob::findOrFail($request->id);
         $name = $job->name;
-        $command = $job->command;
-        logger("Adding job: $name => $command");
+        logger("Adding job: $name");
         DispatchCronjob::dispatch($job->id);
         return response()->json(['success' => true]);
     }
@@ -119,8 +118,7 @@ class CronjobsController extends Controller
             $nextRun = $this->calculate_next_run($job->cron_expression);
             $job->update(array('next_run_at' => $nextRun));
             $name = $job->name;
-            $command = $job->command;
-            logger("Adding job: $name => $command");
+            logger("Adding job: $name");
             DispatchCronjob::dispatch($job->id);
         });
     }
