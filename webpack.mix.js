@@ -15,6 +15,12 @@ const path = require("path");
 mix
   .setPublicPath(process.env.ASSET_PATH)
   .js("resources/js/app.js", "js")
+  .options({
+    fileLoaderDirs: {
+      images: "vendor/laravel-cronjobs/images",
+      fonts: "vendor/laravel-cronjobs/fonts",
+    },
+  })
   .react()
   .sass("resources/sass/app.scss", "css");
 
