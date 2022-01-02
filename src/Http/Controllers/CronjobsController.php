@@ -4,11 +4,13 @@ namespace Sefirosweb\LaravelCronjobs\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use Cron\CronExpression;
-use Illuminate\Support\Facades\Validator;
+use DateTime;
 use Sefirosweb\LaravelCronjobs\Http\Models\Cronjob;
 use Sefirosweb\LaravelCronjobs\Http\Requests\CronExpressionRequest;
 use Sefirosweb\LaravelCronjobs\Http\Requests\CronjobRequest;
+use Sefirosweb\LaravelCronjobs\Jobs\DispatchCronjob;
 
 class CronjobsController extends Controller
 {
@@ -94,5 +96,32 @@ class CronjobsController extends Controller
         ));
 
         return response()->json(['success' => true, 'data' => $nextRun]);
+    }
+
+    public function execute_job(Request $request)
+    {
+        $job = Cronjob::findOrFail($request->id);
+        $name = $job->name;
+        $command = $job->command;
+        logger("Adding job: $name => $command");
+        DispatchCronjob::dispatch($job->id);
+        return response()->json(['success' => true]);
+    }
+
+    public function execute_pending_jobs()
+    {
+        $dateNow = new DateTime();
+
+        $jobs = Cronjob::where('next_run_at', '<=', $dateNow)->where('is_active', '=', 1)->get();
+        logger("Executing kernel cronjob, current pending jobs: " . $jobs->count());
+
+        $jobs->each(function ($job) {
+            $nextRun = $this->calculate_next_run($job->cron_expression);
+            $job->update(array('next_run_at' => $nextRun));
+            $name = $job->name;
+            $command = $job->command;
+            logger("Adding job: $name => $command");
+            DispatchCronjob::dispatch($job->id);
+        });
     }
 }

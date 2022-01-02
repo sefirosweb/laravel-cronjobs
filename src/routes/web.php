@@ -16,6 +16,7 @@ Route::group([
 
         Route::post('preview_job', 'CronjobsController@preview_job');
         Route::post('edit_cron_timer', 'CronjobsController@edit_cron_timer');
+        Route::post('execute_job', 'CronjobsController@execute_job');
 
         Route::get('/', function () {
             return view('cronjobs::index');
