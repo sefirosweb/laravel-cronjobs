@@ -15,6 +15,7 @@ Route::group([
         Route::delete('crud', 'CronjobsController@destroy');
 
         Route::post('preview_job', 'CronjobsController@preview_job');
+        Route::post('edit_cron_timer', 'CronjobsController@edit_cron_timer');
 
         Route::get('/', function () {
             return view('cronjobs::index');

@@ -81,4 +81,18 @@ class CronjobsController extends Controller
 
         return $runs;
     }
+
+    public function edit_cron_timer(CronExpressionRequest $request)
+    {
+        $nextRun = $this->calculate_next_run($request->inputCroExpresion);
+        $cronjob = Cronjob::findOrFail($request->id);
+
+        $cronjob->update(array(
+            'is_active' => 1,
+            'cron_expression' => $request->inputCroExpresion,
+            'next_run_at' => $nextRun
+        ));
+
+        return response()->json(['success' => true, 'data' => $nextRun]);
+    }
 }

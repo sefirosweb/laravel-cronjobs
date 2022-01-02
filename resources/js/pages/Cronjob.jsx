@@ -1,5 +1,5 @@
-import { Crud, EditButton, Modal } from '@sefirosweb/react-crud'
-import { useEffect, useState } from 'react'
+import { Crud, EditButton, PlayButton, Modal } from '@sefirosweb/react-crud'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 import cron_expresion from '../images/cron_expresion.gif'
 import toastr from "toastr";
@@ -20,7 +20,16 @@ const Cronjob = () => {
     }
 
     const handleAcceptModalCron = () => {
-        setShow(false)
+        setIsLoading(true)
+        axios.post(`${APP_URL}/cronjobs/edit_cron_timer`, { inputCroExpresion, id: primaryKey })
+            .then((request) => {
+                const { success } = request.data
+                if (success) {
+                    setShow(false)
+                }
+            })
+            .catch(error => console.log(error))
+            .then(() => setIsLoading(false))
     }
 
     useEffect(() => {
@@ -137,6 +146,11 @@ const Cronjob = () => {
                         Header: 'Edit Cron',
                         accessor: 'edit_cron',
                         Cell: row => <EditButton onClick={() => handleModalShow(row.cell.row.original, row.cell.row.original.id)}></EditButton>
+                    },
+                    {
+                        Header: 'Run Cron',
+                        accessor: 'run_cron',
+                        Cell: row => <PlayButton onClick={() => handleModalShow(row.cell.row.original, row.cell.row.original.id)}></PlayButton>
                     }
                 ]}
             />
