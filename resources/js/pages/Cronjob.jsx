@@ -1,7 +1,7 @@
 import { Crud, EditButton, PlayButton, Modal } from '@sefirosweb/react-crud'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
-import cron_expresion from '../images/cron_expresion.gif'
+import cron_expresion from '@/images/cron_expresion.gif'
 import toastr from "toastr";
 
 const Cronjob = () => {
@@ -12,10 +12,12 @@ const Cronjob = () => {
     const [rowData, setRowData] = useState('');
     const [show, setShow] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
+    const crudRef = useRef();
 
     const handleModalShow = (row, key) => {
         setPrimaryKey(key)
         setRowData(row)
+        setInputCroExpresion(row['cron_expression'])
         setShow(true)
     }
 
@@ -85,18 +87,18 @@ const Cronjob = () => {
     )
 
     const onExitModal = () => {
-        // crudRef.current.refreshTable()
+        crudRef.current.refreshTable()
         setInputCroExpresion('')
         setPreviewCron('')
     }
 
     const handlePlayCron = (row, key) => {
-        // crudRef.current.setIsLoadingTable(true)
+        crudRef.current.setIsLoadingTable(true)
         axios.post(`${APP_URL}/cronjobs/execute_job`, { id: key })
             .then(() => {
-                // crudRef.current.setIsLoadingTable(false)
+                crudRef.current.setIsLoadingTable(false)
             })
-        // .catch(() => crudRef.current.setIsLoadingTable(false))
+            .catch(() => crudRef.current.setIsLoadingTable(false))
     }
 
     return (
@@ -111,6 +113,7 @@ const Cronjob = () => {
                 crudUrl={`${APP_URL}/cronjobs/crud`}
                 primaryKey="id"
                 titleOnDelete="name"
+                ref={crudRef}
                 columns={[
                     {
                         Header: '#',
