@@ -56,7 +56,13 @@ php artisan migrate
 Publish React front end:
 
 ```
-php artisan vendor:publish --tag laravel-cronjobs-view
+php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --tag view --force
+```
+
+Publish custom config:
+
+```
+php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --tag config --force
 ```
 
 ## Usage

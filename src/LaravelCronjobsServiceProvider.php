@@ -15,16 +15,16 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/views', 'cronjobs');
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'laravel-cronjobs-config');
+        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'laravel-cronjobs');
         $this->registerRoutes();
 
         $this->publishes([
             __DIR__ . '/../public/vendor/laravel-cronjobs' => public_path('vendor/laravel-cronjobs'),
-        ], 'laravel-cronjobs-view');
+        ], 'view');
 
         $this->publishes([
             __DIR__ . '/config/config.php' => config_path('laravel-cronjobs.php'),
-        ], 'laravel-cronjobs-config');
+        ], 'config');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -50,8 +50,8 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
     protected function routeConfiguration()
     {
         return [
-            'prefix' => config('laravel-cronjobs-config.prefix'),
-            'middleware' => config('laravel-cronjobs-config.middleware'),
+            'prefix' => config('laravel-cronjobs.prefix'),
+            'middleware' => config('laravel-cronjobs.middleware'),
         ];
     }
 
