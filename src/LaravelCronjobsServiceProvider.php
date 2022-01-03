@@ -17,6 +17,7 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
         $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'laravel-cronjobs-config');
         $this->registerRoutes();
+
         $this->publishes([
             __DIR__ . '/../public/vendor/laravel-cronjobs' => public_path('vendor/laravel-cronjobs'),
         ], 'laravel-cronjobs-view');
@@ -42,7 +43,6 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
-
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         });
