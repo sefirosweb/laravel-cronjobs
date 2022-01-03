@@ -10,8 +10,8 @@ const CustomNavbar = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to='/cronjobs'>Cronjobs</Nav.Link>
-                        <Nav.Link as={Link} to='/cronjobs/queue'>Queues</Nav.Link>
+                        <Nav.Link as={Link} to={`/${APP_PREFIX}`}>Cronjobs</Nav.Link>
+                        <Nav.Link as={Link} to={`/${APP_PREFIX}/queue`}>Queues</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">

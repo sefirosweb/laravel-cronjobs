@@ -23,7 +23,7 @@ const Cronjob = () => {
 
     const handleAcceptModalCron = () => {
         setIsLoading(true)
-        axios.post(`${APP_URL}/cronjobs/edit_cron_timer`, { inputCroExpresion, id: primaryKey })
+        axios.post(`${APP_URL}/edit_cron_timer`, { inputCroExpresion, id: primaryKey })
             .then((request) => {
                 const { success } = request.data
                 if (success) {
@@ -41,7 +41,7 @@ const Cronjob = () => {
         }
 
         const timer = setTimeout(() => {
-            axios.post(`${APP_URL}/cronjobs/preview_job`, { inputCroExpresion })
+            axios.post(`${APP_URL}/preview_job`, { inputCroExpresion })
                 .then((request) => {
                     const responseData = request.data.data
                     const success = request.data.success
@@ -94,7 +94,7 @@ const Cronjob = () => {
 
     const handlePlayCron = (row, key) => {
         crudRef.current.setIsLoadingTable(true)
-        axios.post(`${APP_URL}/cronjobs/execute_job`, { id: key })
+        axios.post(`${APP_URL}/execute_job`, { id: key })
             .then(() => {
                 crudRef.current.setIsLoadingTable(false)
             })
@@ -110,7 +110,7 @@ const Cronjob = () => {
                 canRefresh
                 canSearch
                 createButtonTitle="Create Cronjob"
-                crudUrl={`${APP_URL}/cronjobs/crud`}
+                crudUrl={`${APP_URL}/crud`}
                 primaryKey="id"
                 titleOnDelete="name"
                 ref={crudRef}
