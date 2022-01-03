@@ -71,7 +71,17 @@ return [
 
 ```
 
-Extra: for advance access list I recomend you my other package: laravel-access-list
+Extra: for the advanced access list I recommend my other package:[laravel-access-list](https://github.com/sefirosweb/laravel-access-list)
+Usage:
+
+```php
+return [
+    'prefix' => 'cronjobs',
+    'middleware' => ['web', 'auth', 'checkAcl:cronjob_edit'] // Create access list "cronjob_edit" and assign to role and user
+];
+
+
+```
 
 ## Usage
 
