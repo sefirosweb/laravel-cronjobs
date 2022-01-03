@@ -53,17 +53,25 @@ Install database migrations
 php artisan migrate
 ```
 
-Publish React front end:
+Publish React front and config:
 
 ```
-php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --tag view --force
+php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --force
 ```
 
-Publish custom config:
+## <strong>CAUTION: YOU MUST BE SECURIZE THIS URL PATH, THIS PACKAGE HAVE FULL ACCESS TO ALL CONTROLLERS ADDING CORRECT NAMESPACES</strong>
+
+Easy way: `config/aravel-cronjobs.php`
+
+```php
+return [
+    'prefix' => 'cronjobs', // Prefix path
+    'middleware' => ['web', 'auth'] // Use your self auth system,
+];
 
 ```
-php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --tag config --force
-```
+
+Extra: for advance access list I recomend you my other package: laravel-access-list
 
 ## Usage
 
