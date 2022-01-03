@@ -1,9 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "dev": "ASSET_PATH=../../public/vendor/laravel-cronjobs npm run development",
+        "dev": "ASSET_PATH=../../public npm run development",
         "development": "mix",
-        "watch": "ASSET_PATH=../../public/vendor/laravel-cronjobs mix watch",
+        "watch": "ASSET_PATH=../../public mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "ASSET_PATH=public npm run production",

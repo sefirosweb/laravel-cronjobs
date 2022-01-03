@@ -12,17 +12,19 @@ const path = require("path");
  |
  */
 
+const app_path = "vendor/laravel-cronjobs";
+
 mix
   .setPublicPath(process.env.ASSET_PATH)
-  .js("resources/js/app.js", "js")
+  .js("resources/js/app.js", `${app_path}/js`)
   .options({
     fileLoaderDirs: {
-      images: "images",
-      fonts: "fonts",
+      images: `${app_path}/images`,
+      fonts: `${app_path}/fonts`,
     },
   })
   .react()
-  .sass("resources/sass/app.scss", "css");
+  .sass("resources/sass/app.scss", `${app_path}/css`);
 
 mix.webpackConfig({
   resolve: {

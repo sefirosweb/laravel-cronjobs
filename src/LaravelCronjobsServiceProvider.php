@@ -16,7 +16,7 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
         $this->publishes([
-            __DIR__ . '/../public' => public_path('vendor/laravel-cronjobs'),
+            __DIR__ . '/../public/vendor/laravel-cronjobs' => public_path('vendor/laravel-cronjobs'),
         ], 'laravel-cronjobs-view');
 
         $this->commands([
