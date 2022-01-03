@@ -4,14 +4,14 @@ namespace Sefirosweb\LaravelCronjobs\Commands;
 
 use Illuminate\Console\Command;
 
-class RunPendinJobs extends Command
+class RunPendinCronjobs extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'runpendingjobs';
+    protected $signature = 'cronjobs:pending';
 
     /**
      * The console command description.

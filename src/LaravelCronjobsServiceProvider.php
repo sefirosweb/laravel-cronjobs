@@ -4,7 +4,9 @@ namespace Sefirosweb\LaravelCronjobs;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
-use Sefirosweb\LaravelCronjobs\Commands\RunPendinJobs;
+use Sefirosweb\LaravelCronjobs\Commands\ExecuteCronjob;
+use Sefirosweb\LaravelCronjobs\Commands\ListCronjobs;
+use Sefirosweb\LaravelCronjobs\Commands\RunPendinCronjobs;
 
 class LaravelCronjobsServiceProvider extends ServiceProvider
 {
@@ -18,12 +20,14 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
         ], 'laravel-cronjobs-view');
 
         $this->commands([
-            RunPendinJobs::class,
+            RunPendinCronjobs::class,
+            ListCronjobs::class,
+            ExecuteCronjob::class
         ]);
 
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('runpendingjobs')->everyMinute();
+            $schedule->command('cronjobs:pending')->everyMinute();
         });
     }
 

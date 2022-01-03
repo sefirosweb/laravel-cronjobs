@@ -70,3 +70,19 @@ Go to http://your_app/cronjobs
 - Edit cron, is a [Linux cron job system](https://en.wikipedia.org/wiki/Cron) Ex: 10 \* \* \* \* (Execute every hour at 10 AM) you can see preview of time runs
 
 ![image](https://raw.githubusercontent.com/sefirosweb/laravel-cronjobs/master/docs/how_to.gif)
+
+## Artisan
+
+You can list and execute manually cronjobs via artisan:
+
+Show cronjobs:
+
+```
+php artisan cronjob:list
+```
+
+Execute manually cronjob:
+
+```
+sail artisan cronjobs:execute Foo
+```
