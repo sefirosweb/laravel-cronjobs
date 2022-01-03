@@ -18,7 +18,7 @@
 <body>
     <div id="root"></div>
     <script>
-        window.APP_PREFIX = '{{ config('laravel-cronjobs-config.prefix') }}'
+        window.APP_PREFIX = '{{ config('laravel-cronjobs.prefix') }}'
         window.APP_URL = '{{ env('APP_URL') }}/' + APP_PREFIX
     </script>
 
