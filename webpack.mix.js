@@ -17,8 +17,8 @@ mix
   .js("resources/js/app.js", "js")
   .options({
     fileLoaderDirs: {
-      images: "vendor/laravel-cronjobs/images",
-      fonts: "vendor/laravel-cronjobs/fonts",
+      images: "images",
+      fonts: "fonts",
     },
   })
   .react()
