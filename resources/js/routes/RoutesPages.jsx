@@ -8,8 +8,8 @@ import Queue from "@/pages/Queue";
 function RoutesPages() {
     return (
         <Switch>
-            <Route exact={true} path={`/${APP_PREFIX}`} component={Cronjob} />
-            <Route exact={true} path={`/${APP_PREFIX}/queue`} component={Queue} />
+            <Route exact path={`/${APP_PREFIX}`} component={Cronjob} />
+            <Route exact path={`/${APP_PREFIX}/queue`} component={Queue} />
             <Route component={NotFound} />
         </Switch>
     );
