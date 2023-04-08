@@ -56,7 +56,12 @@ php artisan migrate
 Publish React front and config:
 
 ```
-php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --force
+php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --tag=cronjobs-assets --force
+```
+Publish config:
+
+```
+php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --tag=config --force
 ```
 
 ## <strong>CAUTION: YOU MUST BE SECURIZE THIS URL PATH, THIS PACKAGE HAVE FULL ACCESS TO ALL CONTROLLERS ADDING CORRECT NAMESPACES</strong>
