@@ -6,7 +6,7 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@sefirosweb/react-crud": "file:../../../react-crud/react_components/sefirosweb-react-crud-20230409-075810.tgz",
+        "@sefirosweb/react-crud": "2.10.11",
         "@tanstack/react-query": "^4.28.0",
         "@tanstack/react-query-devtools": "^4.29.0",
         "@types/node": "^18.15.11",
