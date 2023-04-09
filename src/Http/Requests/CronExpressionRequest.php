@@ -26,7 +26,7 @@ class CronExpressionRequest extends FormRequest
     public function rules()
     {
         return [
-            'inputCroExpresion' => [
+            'inputCroExpression' => [
                 'required',
                 'max:255',
                 function ($attribute, $value, $fail) {
@@ -38,10 +38,10 @@ class CronExpressionRequest extends FormRequest
         ];
     }
 
-    private function calculate_next_run($cronExpresion, $manyRuns = 1)
+    private function calculate_next_run($cronExpression, $manyRuns = 1)
     {
         try {
-            $cron = new CronExpression($cronExpresion);
+            $cron = new CronExpression($cronExpression);
 
             $nextRun = $cron->getNextRunDate()->format('Y-m-d H:i:s');
             $runs = $nextRun;

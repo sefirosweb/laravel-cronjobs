@@ -95,20 +95,20 @@ class CronjobsController extends Controller
      */
     public function preview_job(CronExpressionRequest $request)
     {
-        $nextRun = $this->calculate_next_run($request->inputCroExpresion, 40);
+        $nextRun = $this->calculate_next_run($request->inputCroExpression, 40);
         return response()->json(['success' => true, 'data' => $nextRun]);
     }
 
     /**
-     * Calculate the time date to next run based on $cronExpresion
+     * Calculate the time date to next run based on $cronExpression
      *
-     * @param String $cronExpresion
+     * @param String $cronExpression
      * @param Int $manyRuns
      * @return String
      */
-    private function calculate_next_run($cronExpresion, $manyRuns = 1)
+    private function calculate_next_run($cronExpression, $manyRuns = 1)
     {
-        $cron = new CronExpression($cronExpresion);
+        $cron = new CronExpression($cronExpression);
 
         $nextRun = $cron->getNextRunDate()->format('Y-m-d H:i:s');
         $runs = $nextRun;
@@ -129,11 +129,11 @@ class CronjobsController extends Controller
      */
     public function edit_cron_timer(CronExpressionRequest $request)
     {
-        $nextRun = $this->calculate_next_run($request->inputCroExpresion);
+        $nextRun = $this->calculate_next_run($request->inputCroExpression);
         $cronjob = Cronjob::findOrFail($request->id);
 
         $cronjob->update(array(
-            'cron_expression' => $request->inputCroExpresion,
+            'cron_expression' => $request->inputCroExpression,
             'next_run_at' => $nextRun
         ));
 

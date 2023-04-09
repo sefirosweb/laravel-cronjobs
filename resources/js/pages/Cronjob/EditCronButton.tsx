@@ -1,7 +1,7 @@
 import { CrudPropsRef, EditButton, Modal } from "@sefirosweb/react-crud";
 import React, { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import cron_expresion from '@/images/cron_expresion.gif'
+import cron_expression from '@/images/cron_expression.gif'
 import axios from "axios";
 import toastr from "toastr";
 import { APP_URL } from "@/types/configurationType";
@@ -17,18 +17,18 @@ export const EditCronButton = (props: Props) => {
     const { t } = useTranslation()
 
     const [show, setShow] = useState(false);
-    const [inputCroExpresion, setInputCroExpresion] = useState('');
+    const [inputCroExpression, setInputCroExpression] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const [previewCron, setPreviewCron] = useState('')
 
     useEffect(() => {
         setPreviewCron('')
-        if (inputCroExpresion === '') {
+        if (inputCroExpression === '') {
             return
         }
 
         const timer = setTimeout(() => {
-            axios.post(`${APP_URL}/preview_job`, { inputCroExpresion })
+            axios.post(`${APP_URL}/preview_job`, { inputCroExpression })
                 .then((request) => {
                     const responseData = request.data.data
                     const success = request.data.success
@@ -44,15 +44,15 @@ export const EditCronButton = (props: Props) => {
         }, 200)
 
         return () => { clearTimeout(timer) }
-    }, [inputCroExpresion])
+    }, [inputCroExpression])
 
     const handleModalShow = () => {
-        setInputCroExpresion(cronjob.cron_expression)
+        setInputCroExpression(cronjob.cron_expression)
         setShow(true)
     }
 
     const onExitModal = () => {
-        setInputCroExpresion('')
+        setInputCroExpression('')
         setPreviewCron('')
     }
 
@@ -60,7 +60,7 @@ export const EditCronButton = (props: Props) => {
         setIsLoading(true)
         axios.post(`${APP_URL}/edit_cron_timer`, {
             id: cronjob.id,
-            inputCroExpresion,
+            inputCroExpression,
         })
             .then((request) => {
                 const { success } = request.data
@@ -86,9 +86,9 @@ export const EditCronButton = (props: Props) => {
 
                 <Form.Group>
                     <Form.Label>{t('CronExpression')}</Form.Label>
-                    <Form.Control type="text" value={inputCroExpresion} onChange={(e) => setInputCroExpresion(e.target.value)} readOnly={isLoading} />
+                    <Form.Control type="text" value={inputCroExpression} onChange={(e) => setInputCroExpression(e.target.value)} readOnly={isLoading} />
                     <div className='w-100 mt-1'>
-                        <img className='w-100' src={cron_expresion} alt='cronjob_expresion_image' />
+                        <img className='w-100' src={cron_expression} alt='cronjob_expresison_image' />
                     </div>
                 </Form.Group>
                 <Form.Group className="mt-3">
