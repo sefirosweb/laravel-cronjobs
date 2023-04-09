@@ -1,8 +1,10 @@
-import { Crud, EditButton, PlayButton, Modal } from '@sefirosweb/react-crud'
+import { Crud, PlayButton, Modal, EditButton, ColumnDefinition, CrudPropsRef, FieldTypes } from '@sefirosweb/react-crud'
 import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 import cron_expresion from '@/images/cron_expresion.gif'
 import toastr from "toastr";
+import axios from 'axios';
+import { APP_URL } from '@/types/configurationType';
 
 const Cronjob = () => {
 
@@ -12,7 +14,7 @@ const Cronjob = () => {
     const [rowData, setRowData] = useState('');
     const [show, setShow] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
-    const crudRef = useRef();
+    const crudRef = useRef<CrudPropsRef>(null);
 
     const handleModalShow = (row, key) => {
         setPrimaryKey(key)
@@ -101,6 +103,56 @@ const Cronjob = () => {
             .catch(() => crudRef.current.setIsLoadingTable(false))
     }
 
+    const columns: Array<ColumnDefinition<any>> = [
+        {
+            accessorKey: 'id',
+            header: '#',
+            visible: true
+        },
+        {
+            accessorKey: 'name',
+            header: 'Name',
+            titleOnCRUD: 'Name',
+            editable: true,
+        },
+        {
+            accessorKey: 'description',
+            titleOnCRUD: 'Description',
+            header: 'Description',
+            editable: true,
+        },
+        {
+            accessorKey: 'function',
+            titleOnCRUD: 'Function',
+            header: 'Function',
+            editable: true,
+        },
+        {
+            accessorKey: 'controller',
+            titleOnCRUD: 'Controller',
+            header: 'Controller',
+            editable: true,
+        },
+        {
+            accessorKey: 'last_run_at',
+            header: 'Last Run',
+        },
+        {
+            accessorKey: 'next_run_at',
+            header: 'Next Run',
+        },
+        {
+            header: 'Edit Cron',
+            accessorKey: 'edit_cron',
+            Cell: row => <EditButton onClick={() => handleModalShow(row.cell.row.original, row.cell.row.original.id)}></EditButton>
+        },
+        {
+            header: 'Run Cron',
+            accessorKey: 'run_cron',
+            Cell: row => <PlayButton onClick={() => handlePlayCron(row.cell.row.original, row.cell.row.original.id)}></PlayButton>
+        }
+    ]
+
     return (
         <>
             <h1>Cronjobs</h1>
@@ -108,71 +160,13 @@ const Cronjob = () => {
                 canDelete
                 canEdit
                 canRefresh
-                canSearch
+
                 createButtonTitle="Create Cronjob"
                 crudUrl={`${APP_URL}/crud`}
                 primaryKey="id"
                 titleOnDelete="name"
                 ref={crudRef}
-                columns={[
-                    {
-                        Header: '#',
-                        accessor: 'id',
-                        sortable: true,
-                        visible: true
-                    },
-                    {
-                        accessor: 'name',
-                        Header: 'Name',
-                        titleOnCRUD: 'Name',
-                        editable: true,
-                        sortable: true,
-                    },
-                    {
-                        accessor: 'description',
-                        titleOnCRUD: 'Description',
-                        Header: 'Description',
-                        editable: true,
-                        sortable: true,
-                        type: 'textarea'
-                    },
-                    {
-                        accessor: 'function',
-                        titleOnCRUD: 'Function',
-                        Header: 'Function',
-                        editable: true,
-                        sortable: true,
-                        type: 'text'
-                    },
-                    {
-                        accessor: 'controller',
-                        titleOnCRUD: 'Controller',
-                        Header: 'Controller',
-                        editable: true,
-                        sortable: true,
-                        type: 'text'
-                    },
-                    {
-                        accessor: 'last_run_at',
-                        Header: 'Last Run',
-                        sortable: true
-                    },
-                    {
-                        accessor: 'next_run_at',
-                        Header: 'Next Run',
-                        sortable: true
-                    },
-                    {
-                        Header: 'Edit Cron',
-                        accessor: 'edit_cron',
-                        Cell: row => <EditButton onClick={() => handleModalShow(row.cell.row.original, row.cell.row.original.id)}></EditButton>
-                    },
-                    {
-                        Header: 'Run Cron',
-                        accessor: 'run_cron',
-                        Cell: row => <PlayButton onClick={() => handlePlayCron(row.cell.row.original, row.cell.row.original.id)}></PlayButton>
-                    }
-                ]}
+                columns={columns}
             />
 
             <Modal
