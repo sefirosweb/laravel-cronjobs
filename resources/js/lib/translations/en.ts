@@ -10,7 +10,10 @@ export default {
     RunCron: 'Run Cron',
     DisableCron: 'Disable Cron',
     TitleCron: 'Cronjobs',
+    CronExpression: 'Cronjob expression',
+    PreviewNextRun: 'Preview Next Run',
     error: {
         page_not_found: 'Page not found 404',
+        still_not_ready: 'Still not ready!'
     },
 }

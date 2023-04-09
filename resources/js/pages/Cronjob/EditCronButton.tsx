@@ -5,6 +5,7 @@ import cron_expresion from '@/images/cron_expresion.gif'
 import axios from "axios";
 import toastr from "toastr";
 import { APP_URL } from "@/types/configurationType";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     crudRef: React.MutableRefObject<CrudPropsRef>,
@@ -13,6 +14,7 @@ type Props = {
 
 export const EditCronButton = (props: Props) => {
     const { crudRef, cronjob } = props
+    const { t } = useTranslation()
 
     const [show, setShow] = useState(false);
     const [inputCroExpresion, setInputCroExpresion] = useState('');
@@ -75,7 +77,7 @@ export const EditCronButton = (props: Props) => {
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                     <Form.Label column sm="2">
-                        Cronjob:
+                        {t('Name')}:
                     </Form.Label>
                     <Col sm="10">
                         <Form.Control plaintext readOnly defaultValue={cronjob.name} />
@@ -83,14 +85,14 @@ export const EditCronButton = (props: Props) => {
                 </Form.Group>
 
                 <Form.Group>
-                    <Form.Label>Cron Expresion</Form.Label>
+                    <Form.Label>{t('CronExpression')}</Form.Label>
                     <Form.Control type="text" value={inputCroExpresion} onChange={(e) => setInputCroExpresion(e.target.value)} readOnly={isLoading} />
                     <div className='w-100 mt-1'>
                         <img className='w-100' src={cron_expresion} alt='cronjob_expresion_image' />
                     </div>
                 </Form.Group>
-                <Form.Group>
-                    <Form.Label>Preview Next Run</Form.Label>
+                <Form.Group className="mt-3">
+                    <Form.Label>{t('PreviewNextRun')}</Form.Label>
                     <Form.Control as="textarea" rows={5} value={previewCron} readOnly />
                 </Form.Group>
             </Form>
@@ -104,7 +106,7 @@ export const EditCronButton = (props: Props) => {
                 show={show}
                 setShow={setShow}
                 accept='Accept'
-                title={'Edit Cronjob'}
+                title={t('EditCron')}
                 body={modalBody}
                 handleAccept={handleAcceptModalCron}
                 isLoading={isLoading}

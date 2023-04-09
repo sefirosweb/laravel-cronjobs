@@ -10,7 +10,10 @@ export default {
     RunCron: 'Ejecutar Cron',
     DisableCron: 'Desactivar Cron',
     TitleCron: 'Cronjobs (Tareas programadas)',
+    CronExpression: 'Cronjob expresión',
+    PreviewNextRun: 'Previsualización para las siguientes ejecuciones',
     error: {
         page_not_found: 'Página no encontrada',
+        still_not_ready: 'Todavía no está listo!'
     },
 }
