@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route } from "react-router-dom";
 
 import { APP_PREFIX } from "@/types/configurationType";
-import { Cronjob } from "@/pages/Cronjob";
+import { Cronjob } from "@/pages/Cronjob/page";
 import { Queue } from "@/pages/Queue";
 import { NotFound } from "@/pages/NotFound";
 import Layout from '@/pages/layout/Layout';
