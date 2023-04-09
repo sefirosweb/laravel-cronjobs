@@ -1,14 +1,35 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
-import { Crud, PlayButton, ColumnDefinition, CrudPropsRef, RestoreButton, CancelButton, FieldTypes } from '@sefirosweb/react-crud'
+import { Crud, PlayButton, ColumnDefinition, CrudPropsRef, FieldTypes } from '@sefirosweb/react-crud'
 import { APP_URL } from '@/types/configurationType';
 import { EditCronButton } from './EditCronButton';
 import { useTranslation } from 'react-i18next';
+import { Col, Form, Row } from 'react-bootstrap';
+import { DisableButton } from './DisableButton';
 
 export const Cronjob = () => {
     const crudRef = useRef<CrudPropsRef>(null);
+    const [filters, setFilters] = useState("active");
 
     const { t } = useTranslation()
+    const customFilters = (
+        <Row>
+            <Col sm={12} md={'auto'} className='mt-3'>
+                <Form.Select
+                    value={filters}
+                    onChange={(e) => setFilters(e.target.value)}
+                >
+                    <option value="active">{t('Active')}</option>
+                    <option value="all">{t('All')}</option>
+                    <option value="deleted">{t('Deleted')}</option>
+                </Form.Select>
+            </Col>
+        </Row>
+    )
+
+    useEffect(() => {
+        crudRef.current.setLazyilters({ status: filters });
+    }, [filters])
 
     const handlePlayCron = (id: number) => {
         crudRef.current.setIsLoading(true)
@@ -73,9 +94,7 @@ export const Cronjob = () => {
         {
             id: 'disable',
             header: t('DisableCron'),
-            cell: props => props.cell.row.original.deleted_at ?
-                <RestoreButton variant='success' onClick={() => handlePlayCron(props.cell.row.original.id)}></RestoreButton> :
-                <CancelButton variant='danger' onClick={() => handlePlayCron(props.cell.row.original.id)}></CancelButton>
+            cell: props => <DisableButton cronjob={props.cell.row.original} crudRef={crudRef} />
         }
     ]
 
@@ -88,9 +107,11 @@ export const Cronjob = () => {
                 createButtonTitle={t('CreateCron')}
                 crudUrl={`${APP_URL}/crud`}
                 primaryKey="id"
+                sentKeyAs='cronjob_id'
                 titleOnDelete="name"
                 ref={crudRef}
                 columns={columns}
+                customButtons={customFilters}
             />
         </>
     );

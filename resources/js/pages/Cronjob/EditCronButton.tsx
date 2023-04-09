@@ -69,7 +69,7 @@ export const EditCronButton = (props: Props) => {
                     setShow(false)
                 }
             })
-            .then(() => setIsLoading(false))
+            .finally(() => setIsLoading(false))
     }
 
     const modalBody = (

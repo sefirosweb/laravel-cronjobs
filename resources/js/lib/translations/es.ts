@@ -14,6 +14,9 @@ export default {
     TitleCron: 'Cronjobs (Tareas programadas)',
     CronExpression: 'Cronjob expresión',
     PreviewNextRun: 'Previsualización para las siguientes ejecuciones',
+    Active: 'Activo',
+    All: 'Todos',
+    Deleted: 'Eliminados',
     error: {
         page_not_found: 'Página no encontrada',
         still_not_ready: 'Todavía no está listo!'
