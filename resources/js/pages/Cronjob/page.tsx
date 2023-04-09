@@ -51,7 +51,7 @@ export const Cronjob = () => {
         {
             accessorKey: 'id',
             header: '#',
-            visible: true
+            visible: false
         },
         {
             accessorKey: 'name',
@@ -77,6 +77,19 @@ export const Cronjob = () => {
             titleOnCRUD: t('Controller'),
             header: t('Controller'),
             editable: true,
+            cell: props => {
+                const controller = props.cell.row.original.controller
+                const splited = controller.split('\\')
+
+                return (
+                    <div onClick={() => navigator.clipboard.writeText(controller).then(() => toastr.info('Copied to clipboard'))} style={{
+                        cursor: 'pointer',
+                        color: 'blue'
+                    }}>
+                        {splited.map((p, key) => <div key={key}>{p}{splited.length - 1 === key ? <></> : <>\</>}</div>)}
+                    </div>
+                )
+            }
         },
         {
             accessorKey: 'last_run_at',
