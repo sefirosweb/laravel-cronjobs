@@ -100,6 +100,23 @@ Go to http://your_app/cronjobs
 
 ![image](https://raw.githubusercontent.com/sefirosweb/laravel-cronjobs/master/docs/how_to.gif)
 
+## Events
+Added 2 event emitters to catch if cronjob has been executed successfully or have an error:
+```php
+class EventServiceProvider extends ServiceProvider
+{
+    protected $listen = [
+        'Sefirosweb\LaravelCronjobs\Events\DispatchCronjobSuccessfully' => [
+            YourCustomListenerCronjobSuccessfully::class
+            // Send: Cronjob $cronjob
+        ],
+        'Sefirosweb\LaravelCronjobs\Events\DispatchCronjobError' => [
+            YourCustomListenerCronjobError::class
+            // Send: Cronjob $cronjob, string $error
+        ],
+    ];
+
+```
 ## Artisan
 
 You can list and execute manually cronjobs via artisan:

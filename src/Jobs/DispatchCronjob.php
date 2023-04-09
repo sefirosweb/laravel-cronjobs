@@ -9,6 +9,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Sefirosweb\LaravelCronjobs\Events\DispatchCronjobError;
+use Sefirosweb\LaravelCronjobs\Events\DispatchCronjobSuccessfully;
 use Sefirosweb\LaravelCronjobs\Http\Models\Cronjob;
 
 class DispatchCronjob implements ShouldQueue
@@ -44,12 +46,15 @@ class DispatchCronjob implements ShouldQueue
             $cronjob->last_run_at = new DateTime();
             $cronjob->message = '';
             $cronjob->save();
+
+            event(new DispatchCronjobSuccessfully($cronjob));
         } catch (Exception $e) {
             $cronjob->next_run_at = null;
             $cronjob->message = $e->getMessage();
             $cronjob->save();
 
             $cronjob->delete();
+            event(new DispatchCronjobError($cronjob, $e->getMessage()));
         }
     }
 }
