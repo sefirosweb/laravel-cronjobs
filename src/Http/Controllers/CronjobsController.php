@@ -131,7 +131,7 @@ class CronjobsController extends Controller
     public function edit_cron_timer(CronExpressionRequest $request)
     {
         $nextRunAt = $this->calculate_next_run($request->inputCroExpression);
-        $cronjob = Cronjob::findOrFail($request->id);
+        $cronjob = Cronjob::withTrashed()->findOrFail($request->id);
 
         $cronjob->cron_expression = $request->inputCroExpression;
         $cronjob->next_run_at = $nextRunAt;
