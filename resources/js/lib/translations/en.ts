@@ -1,4 +1,6 @@
 export default {
+    Brand: 'Laravel Cronjob System',
+    Queues: 'Queues',
     Name: "Name",
     Description: "Description",
     Function: "Function",

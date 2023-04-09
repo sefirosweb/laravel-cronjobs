@@ -22,12 +22,12 @@ export default () => {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">Laravel Cronjob System</Navbar.Brand>
+                <Navbar.Brand href="#home">{t('Brand')}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={NavLink} to={`/${APP_PREFIX}`}>Cronjobs</Nav.Link>
-                        <Nav.Link as={NavLink} to={`/${APP_PREFIX}/queue`}>Queues</Nav.Link>
+                        <Nav.Link as={NavLink} to={`/${APP_PREFIX}/queue`}>{t('Queues')}</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
