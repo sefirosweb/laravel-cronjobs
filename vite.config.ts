@@ -4,6 +4,7 @@ import laravel from 'laravel-vite-plugin';
 import path from 'path'
 
 export default defineConfig({
+    base: '/vendor/laravel-cronjobs/',
     server: {
         hmr: {
             host: 'localhost'

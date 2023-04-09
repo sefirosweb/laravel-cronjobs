@@ -1,0 +1,21 @@
+{
+  "resources/js/app.css": {
+    "file": "assets/app-eb98d399.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.tsx": {
+    "assets": [
+      "assets/cron_expression-b6d09057.gif"
+    ],
+    "css": [
+      "assets/app-eb98d399.css"
+    ],
+    "file": "assets/app-10f06386.js",
+    "isEntry": true,
+    "src": "resources/js/app.tsx"
+  },
+  "resources/js/images/cron_expression.gif": {
+    "file": "assets/cron_expression-b6d09057.gif",
+    "src": "resources/js/images/cron_expression.gif"
+  }
+}

@@ -19,7 +19,7 @@ class LaravelCronjobsServiceProvider extends ServiceProvider
         $this->registerRoutes();
 
         $this->publishes([
-            __DIR__ . '/../public/vendor/laravel-cronjobs' => public_path('vendor/laravel-cronjobs'),
+            __DIR__ . '/../public/bundle' => public_path('vendor/laravel-cronjobs'),
         ], ['cronjobs-assets', 'laravel-assets']);
 
         $this->publishes([
