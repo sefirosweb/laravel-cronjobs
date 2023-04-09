@@ -7,7 +7,7 @@ Must have a schedule:work running
 For test execute:
 
 ```
-sail artisan schedule:work
+php artisan schedule:work
 ```
 
 If you have queue in redis must have running queue listener
@@ -15,7 +15,7 @@ If you have queue in redis must have running queue listener
 For test execute:
 
 ```
-sail artisan queue:listen
+php artisan queue:listen
 ```
 
 ## Installation - Composer
@@ -113,5 +113,5 @@ php artisan cronjob:list
 Execute manually cronjob:
 
 ```
-sail artisan cronjobs:execute Foo
+php artisan cronjobs:execute Foo
 ```

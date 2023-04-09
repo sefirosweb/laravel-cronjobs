@@ -15,8 +15,6 @@ class Cronjob extends Model
         'function',
         'controller',
         'cron_expression',
-        'next_run_at',
-        'last_run_at'
     ];
 
     public function getUpdatedAtAttribute($date)

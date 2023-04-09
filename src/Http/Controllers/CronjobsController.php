@@ -56,8 +56,8 @@ class CronjobsController extends Controller
      */
     public function update(CronjobRequest $request)
     {
-        $accessList = Cronjob::findOrFail($request->cronjob_id);
-        $accessList->update($request->all());
+        $cronjob = Cronjob::withTrashed()->findOrFail($request->cronjob_id);
+        $cronjob->update($request->all());
         return response()->json(['success' => true]);
     }
 
@@ -80,6 +80,7 @@ class CronjobsController extends Controller
             } catch (Exception $e) {
                 $nextRunAt = null;
             }
+            $cronjob->message = '';
             $cronjob->next_run_at = $nextRunAt;
             $cronjob->save();
             $cronjob->restore();
@@ -129,20 +130,19 @@ class CronjobsController extends Controller
      */
     public function edit_cron_timer(CronExpressionRequest $request)
     {
-        $nextRun = $this->calculate_next_run($request->inputCroExpression);
+        $nextRunAt = $this->calculate_next_run($request->inputCroExpression);
         $cronjob = Cronjob::findOrFail($request->id);
 
-        $cronjob->update(array(
-            'cron_expression' => $request->inputCroExpression,
-            'next_run_at' => $nextRun
-        ));
+        $cronjob->cron_expression = $request->inputCroExpression;
+        $cronjob->next_run_at = $nextRunAt;
+        $cronjob->save();
 
-        return response()->json(['success' => true, 'data' => $nextRun]);
+        return response()->json(['success' => true, 'data' => $nextRunAt]);
     }
 
     public function execute_job(Request $request)
     {
-        $job = Cronjob::findOrFail($request->id);
+        $job = Cronjob::withTrashed()->findOrFail($request->id);
         $name = $job->name;
         logger("Adding job: $name");
         DispatchCronjob::dispatch($job->id);
@@ -153,7 +153,7 @@ class CronjobsController extends Controller
     {
         $dateNow = new DateTime();
 
-        $jobs = Cronjob::whereNot()->where('next_run_at', '<=', $dateNow)->get();
+        $jobs = Cronjob::whereNotNull('next_run_at')->where('next_run_at', '<=', $dateNow)->get();
         logger("Executing kernel cronjob, current pending jobs: " . $jobs->count());
 
         $jobs->each(function ($job) {
@@ -163,5 +163,11 @@ class CronjobsController extends Controller
             logger("Adding job: $name");
             DispatchCronjob::dispatch($job->id);
         });
+    }
+
+    public function test()
+    {
+        logger('Test logger ' . date('Y-m-d H:i:s'));
+        return 0;
     }
 }

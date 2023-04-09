@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
+import toastr from "toastr";
 import { Crud, PlayButton, ColumnDefinition, CrudPropsRef, FieldTypes } from '@sefirosweb/react-crud'
 import { APP_URL } from '@/types/configurationType';
 import { EditCronButton } from './EditCronButton';
@@ -36,10 +37,14 @@ export const Cronjob = () => {
         axios.post(`${APP_URL}/execute_job`, {
             id
         })
-            .then(() => {
-                crudRef.current.setIsLoading(false)
+            .then((request) => {
+                const { success } = request.data
+                if (success) {
+                    crudRef.current.refreshTable()
+                    toastr.info('Job dispatched!');
+                }
             })
-            .catch(() => crudRef.current.setIsLoading(false))
+            .finally(() => crudRef.current.setIsLoading(false))
     }
 
     const columns: Array<ColumnDefinition<Cronjob>> = [
@@ -80,6 +85,9 @@ export const Cronjob = () => {
         {
             accessorKey: 'next_run_at',
             header: t('NextRun'),
+        },
+        {
+            accessorKey: 'message'
         },
         {
             id: 'edit_cron',
