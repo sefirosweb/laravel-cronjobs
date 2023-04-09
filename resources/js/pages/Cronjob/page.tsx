@@ -3,9 +3,12 @@ import axios from 'axios';
 import { Crud, PlayButton, ColumnDefinition, CrudPropsRef, RestoreButton, CancelButton, FieldTypes } from '@sefirosweb/react-crud'
 import { APP_URL } from '@/types/configurationType';
 import { EditCronButton } from './EditCronButton';
+import { useTranslation } from 'react-i18next';
 
 export const Cronjob = () => {
     const crudRef = useRef<CrudPropsRef>(null);
+
+    const { t } = useTranslation()
 
     const handlePlayCron = (id: number) => {
         crudRef.current.setIsLoading(true)
@@ -26,50 +29,50 @@ export const Cronjob = () => {
         },
         {
             accessorKey: 'name',
-            header: 'Name',
-            titleOnCRUD: 'Name',
+            header: t('Name'),
+            titleOnCRUD: t('Name'),
             editable: true,
         },
         {
             accessorKey: 'description',
-            titleOnCRUD: 'Description',
-            header: 'Description',
+            titleOnCRUD: t('Description'),
+            header: t('Description'),
             fieldType: FieldTypes.TEXTAREA,
             editable: true,
         },
         {
             accessorKey: 'function',
-            titleOnCRUD: 'Function',
-            header: 'Function',
+            titleOnCRUD: t('Function'),
+            header: t('Function'),
             editable: true,
         },
         {
             accessorKey: 'controller',
-            titleOnCRUD: 'Controller',
-            header: 'Controller',
+            titleOnCRUD: t('Controller'),
+            header: t('Controller'),
             editable: true,
         },
         {
             accessorKey: 'last_run_at',
-            header: 'Last Run',
+            header: t('LastRun'),
         },
         {
             accessorKey: 'next_run_at',
-            header: 'Next Run',
+            header: t('NextRun'),
         },
         {
             id: 'edit_cron',
-            header: 'Edit Cron',
-            cell: (props) => <EditCronButton crudRef={crudRef} cronjob={props.cell.row.original} />
+            header: t('EditCron'),
+            cell: props => <EditCronButton crudRef={crudRef} cronjob={props.cell.row.original} />
         },
         {
             id: 'run_cron',
-            header: 'Run Cron',
-            cell: row => <PlayButton variant='warning' onClick={() => handlePlayCron(row.cell.row.original.id)}></PlayButton>
+            header: t('RunCron'),
+            cell: props => <PlayButton variant='warning' onClick={() => handlePlayCron(props.cell.row.original.id)}></PlayButton>
         },
         {
             id: 'disable',
-            header: 'Disable Cron',
+            header: t('DisableCron'),
             cell: props => props.cell.row.original.deleted_at ?
                 <RestoreButton variant='success' onClick={() => handlePlayCron(props.cell.row.original.id)}></RestoreButton> :
                 <CancelButton variant='danger' onClick={() => handlePlayCron(props.cell.row.original.id)}></CancelButton>
@@ -78,11 +81,11 @@ export const Cronjob = () => {
 
     return (
         <>
-            <h1>Cronjobs</h1>
+            <h1>{t('TitleCron')}</h1>
             <Crud
                 canEdit
                 canRefresh
-                createButtonTitle="Create Cronjob"
+                createButtonTitle={t('CreateCron')}
                 crudUrl={`${APP_URL}/crud`}
                 primaryKey="id"
                 titleOnDelete="name"
