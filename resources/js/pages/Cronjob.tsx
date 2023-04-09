@@ -1,4 +1,4 @@
-import { Crud, PlayButton, Modal, EditButton, ColumnDefinition, CrudPropsRef, FieldTypes } from '@sefirosweb/react-crud'
+import { Crud, PlayButton, Modal, EditButton, ColumnDefinition, CrudPropsRef, RestoreButton, CancelButton } from '@sefirosweb/react-crud'
 import React, { useEffect, useRef, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 import cron_expresion from '@/images/cron_expresion.gif'
@@ -6,20 +6,20 @@ import toastr from "toastr";
 import axios from 'axios';
 import { APP_URL } from '@/types/configurationType';
 
-const Cronjob = () => {
+export const Cronjob = () => {
 
-    const [primaryKey, setPrimaryKey] = useState('');
+    const [primaryKey, setPrimaryKey] = useState<number>(null);
     const [inputCroExpresion, setInputCroExpresion] = useState('');
     const [previewCron, setPreviewCron] = useState('')
-    const [rowData, setRowData] = useState('');
+    const [rowData, setRowData] = useState<Cronjob | null>(null);
     const [show, setShow] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const crudRef = useRef<CrudPropsRef>(null);
 
-    const handleModalShow = (row, key) => {
+    const handleModalShow = (row: Cronjob, key: number) => {
         setPrimaryKey(key)
         setRowData(row)
-        setInputCroExpresion(row['cron_expression'])
+        setInputCroExpresion(row.cron_expression)
         setShow(true)
     }
 
@@ -69,7 +69,7 @@ const Cronjob = () => {
                         Cronjob:
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Control plaintext readOnly defaultValue={rowData.name} />
+                        <Form.Control plaintext readOnly defaultValue={rowData?.name} />
                     </Col>
                 </Form.Group>
 
@@ -95,15 +95,15 @@ const Cronjob = () => {
     }
 
     const handlePlayCron = (row, key) => {
-        crudRef.current.setIsLoadingTable(true)
+        crudRef.current.setIsLoading(true)
         axios.post(`${APP_URL}/execute_job`, { id: key })
             .then(() => {
-                crudRef.current.setIsLoadingTable(false)
+                crudRef.current.setIsLoading(false)
             })
-            .catch(() => crudRef.current.setIsLoadingTable(false))
+            .catch(() => crudRef.current.setIsLoading(false))
     }
 
-    const columns: Array<ColumnDefinition<any>> = [
+    const columns: Array<ColumnDefinition<Cronjob>> = [
         {
             accessorKey: 'id',
             header: '#',
@@ -142,14 +142,21 @@ const Cronjob = () => {
             header: 'Next Run',
         },
         {
+            id: 'edit_cron',
             header: 'Edit Cron',
-            accessorKey: 'edit_cron',
-            Cell: row => <EditButton onClick={() => handleModalShow(row.cell.row.original, row.cell.row.original.id)}></EditButton>
+            cell: row => <EditButton variant='warning' onClick={() => handleModalShow(row.cell.row.original, row.cell.row.original.id)}></EditButton>
         },
         {
+            id: 'run_cron',
             header: 'Run Cron',
-            accessorKey: 'run_cron',
-            Cell: row => <PlayButton onClick={() => handlePlayCron(row.cell.row.original, row.cell.row.original.id)}></PlayButton>
+            cell: row => <PlayButton variant='warning' onClick={() => handlePlayCron(row.cell.row.original, row.cell.row.original.id)}></PlayButton>
+        },
+        {
+            id: 'disable',
+            header: 'Disable Cron',
+            cell: props => props.cell.row.original.deleted_at ?
+                <RestoreButton variant='success' onClick={() => handlePlayCron(props.cell.row.original, props.cell.row.original.id)}></RestoreButton> :
+                <CancelButton variant='danger' onClick={() => handlePlayCron(props.cell.row.original, props.cell.row.original.id)}></CancelButton>
         }
     ]
 
@@ -157,10 +164,8 @@ const Cronjob = () => {
         <>
             <h1>Cronjobs</h1>
             <Crud
-                canDelete
                 canEdit
                 canRefresh
-
                 createButtonTitle="Create Cronjob"
                 crudUrl={`${APP_URL}/crud`}
                 primaryKey="id"
@@ -182,5 +187,3 @@ const Cronjob = () => {
         </>
     );
 }
-
-export default Cronjob;

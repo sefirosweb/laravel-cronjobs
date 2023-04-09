@@ -90,7 +90,6 @@ class CronjobsController extends Controller
         $cronjob = Cronjob::findOrFail($request->id);
 
         $cronjob->update(array(
-            'is_active' => 1,
             'cron_expression' => $request->inputCroExpresion,
             'next_run_at' => $nextRun
         ));
@@ -111,7 +110,7 @@ class CronjobsController extends Controller
     {
         $dateNow = new DateTime();
 
-        $jobs = Cronjob::where('next_run_at', '<=', $dateNow)->where('is_active', '=', 1)->get();
+        $jobs = Cronjob::where('next_run_at', '<=', $dateNow)->get();
         logger("Executing kernel cronjob, current pending jobs: " . $jobs->count());
 
         $jobs->each(function ($job) {

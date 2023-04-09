@@ -4,9 +4,11 @@ namespace Sefirosweb\LaravelCronjobs\Http\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cronjob extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'name',
         'description',
@@ -14,8 +16,7 @@ class Cronjob extends Model
         'controller',
         'cron_expression',
         'next_run_at',
-        'last_run_at',
-        'is_active'
+        'last_run_at'
     ];
 
     public function getUpdatedAtAttribute($date)

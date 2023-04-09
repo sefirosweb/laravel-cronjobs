@@ -49,8 +49,7 @@ class ListCronjobs extends Command
             'controller',
             'last_run_at',
             'next_run_at',
-            'cron_expression',
-            'is_active'
+            'cron_expression'
         ])->get();
 
         $this->table(
