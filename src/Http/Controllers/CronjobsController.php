@@ -158,7 +158,8 @@ class CronjobsController extends Controller
 
         $jobs->each(function ($job) {
             $nextRun = $this->calculate_next_run($job->cron_expression);
-            $job->update(array('next_run_at' => $nextRun));
+            $job->next_run_at = $nextRun;
+            $job->save();
             $name = $job->name;
             logger("Adding job: $name");
             DispatchCronjob::dispatch($job->id);
