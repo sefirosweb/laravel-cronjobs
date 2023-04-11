@@ -125,6 +125,7 @@ export const Cronjob = () => {
             <Crud
                 canEdit
                 canRefresh
+                enableGlobalFilter
                 createButtonTitle={t('CreateCron')}
                 crudUrl={`${APP_URL}/crud`}
                 primaryKey="id"
