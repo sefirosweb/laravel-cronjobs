@@ -47,14 +47,22 @@ class DispatchCronjob implements ShouldQueue
             $cronjob->message = '';
             $cronjob->save();
 
-            event(new DispatchCronjobSuccessfully($cronjob));
+            try {
+                event(new DispatchCronjobSuccessfully($cronjob));
+            } catch (Exception $e) {
+                logger($e->getMessage());
+            }
         } catch (Exception $e) {
             $cronjob->next_run_at = null;
             $cronjob->message = $e->getMessage();
             $cronjob->save();
-
             $cronjob->delete();
-            event(new DispatchCronjobError($cronjob, $e->getMessage()));
+
+            try {
+                event(new DispatchCronjobError($cronjob, $e->getMessage()));
+            } catch (Exception $e) {
+                logger($e->getMessage());
+            }
         }
     }
 }
