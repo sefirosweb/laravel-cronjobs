@@ -3,8 +3,7 @@
 namespace Sefirosweb\LaravelCronjobs\Commands;
 
 use Illuminate\Console\Command;
-use ReflectionClass;
-use ReflectionMethod;
+use Illuminate\Support\Facades\DB;
 use Sefirosweb\LaravelCronjobs\Http\Models\Cronjob;
 
 class ListCronjobs extends Command
@@ -42,37 +41,20 @@ class ListCronjobs extends Command
     {
         echo 'Jobs you can execute:' . PHP_EOL;
 
-        $cronjobs = Cronjob::select([
+        $cronjobs = Cronjob::withTrashed()->select([
             'name',
             'description',
             'function',
             'controller',
             'last_run_at',
             'next_run_at',
-            'cron_expression'
-        ])->get();
+            'cron_expression',
+            DB::raw('IF(ISNULL(deleted_at), 1, 0) as active')
+        ])->orderByDesc('active')->orderBy('next_run_at')->get();
 
         $this->table(
             ['Name {job}', 'Description', 'Function', 'Controller', 'Last', 'Next', 'Cron', 'Active'],
             $cronjobs
         );
-    }
-
-    private function objectToArray($obj)
-    {
-        if (is_object($obj)) {
-            $obj = (array)$obj;
-        }
-
-        if (is_array($obj)) {
-            $new = array();
-            foreach ($obj as $key => $val) {
-                $new[$key] = $this->objectToArray($val);
-            }
-        } else {
-            $new = $obj;
-        }
-
-        return $new;
     }
 }
