@@ -1,5 +1,5 @@
 export default {
-    Brand: 'Systema de tareas para Laravel',
+    Brand: 'Sstema de tareas para Laravel',
     Queues: 'Colas',
     Name: "Nombre",
     Description: "Descripción",

@@ -53,10 +53,9 @@ class DispatchCronjob implements ShouldQueue
                 logger($e->getMessage());
             }
         } catch (Exception $e) {
-            $cronjob->next_run_at = null;
+            $cronjob->last_run_at = new DateTime();
             $cronjob->message = $e->getMessage();
             $cronjob->save();
-            $cronjob->delete();
 
             try {
                 event(new DispatchCronjobError($cronjob, $e->getMessage()));
