@@ -3,7 +3,6 @@
 namespace Sefirosweb\LaravelCronjobs\Jobs;
 
 use DateTime;
-use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Sefirosweb\LaravelCronjobs\Events\DispatchCronjobError;
 use Sefirosweb\LaravelCronjobs\Events\DispatchCronjobSuccessfully;
 use Sefirosweb\LaravelCronjobs\Http\Models\Cronjob;
+use Throwable;
 
 class DispatchCronjob implements ShouldQueue
 {
@@ -49,17 +49,17 @@ class DispatchCronjob implements ShouldQueue
 
             try {
                 event(new DispatchCronjobSuccessfully($cronjob));
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 logger($e->getMessage());
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $cronjob->last_run_at = new DateTime();
             $cronjob->message = $e->getMessage();
             $cronjob->save();
 
             try {
                 event(new DispatchCronjobError($cronjob, $e->getMessage()));
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 logger($e->getMessage());
             }
         }
