@@ -8,6 +8,7 @@ type Cronjob = {
     message: string;
     max_tries: number;
     backoff: number;
+    timeout: number;
     last_run_at: string /* Date */ | null;
     next_run_at: string /* Date */ | null;
     deleted_at: string /* Date */ | null;

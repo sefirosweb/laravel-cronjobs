@@ -20,6 +20,7 @@ class DispatchCronjob implements ShouldQueue
     protected string $id;
     public $tries = 1;
     public $backoff = 60;
+    public $timeout = 120;
 
     /**
      * Create a new job instance.
@@ -32,6 +33,7 @@ class DispatchCronjob implements ShouldQueue
         $cronjob = Cronjob::withTrashed()->findOrFail($this->id);
         $this->tries = $cronjob->max_tries;
         $this->backoff = $cronjob->backoff;
+        $this->timeout = $cronjob->timeout;
     }
 
     /**

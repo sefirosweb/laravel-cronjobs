@@ -12,6 +12,7 @@ export default {
     EditCron: 'Edit Cron',
     Backoff: 'Backoff between tries (seconds)',
     MaxTries: 'Max tries',
+    Timeout: 'Timeout (seconds)',
     RunCron: 'Run Cron',
     DisableCron: 'Disable Cron',
     TitleCron: 'Cronjobs',

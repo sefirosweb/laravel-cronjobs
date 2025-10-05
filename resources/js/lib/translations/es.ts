@@ -11,6 +11,7 @@ export default {
     CreateCron: 'Crear Cron',
     Backoff: 'Retraso entre intentos (segundos)',
     MaxTries: 'Máximo de intentos',
+    Timeout: 'Tiempo máximo de ejecución (segundos)',
     EditCron: 'Editar Cron',
     RunCron: 'Ejecutar Cron',
     DisableCron: 'Desactivar Cron',

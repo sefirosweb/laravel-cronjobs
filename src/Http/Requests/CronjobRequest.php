@@ -55,6 +55,11 @@ class CronjobRequest extends FormRequest
                 'integer',
                 'min:1',
             ],
+            'timeout' => [
+                'required',
+                'integer',
+                'min:30',
+            ],
         ];
     }
 }

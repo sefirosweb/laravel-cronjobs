@@ -118,6 +118,13 @@ export const Cronjob = () => {
             editable: true,
         },
         {
+            accessorKey: 'timeout',
+            header: t('Timeout'),
+            titleOnCRUD: t('Timeout'),
+            visible: false,
+            editable: true,
+        },
+        {
             id: 'edit_cron',
             header: t('EditCron'),
             cell: props => <EditCronButton crudRef={crudRef} cronjob={props.cell.row.original} />
