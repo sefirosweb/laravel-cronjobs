@@ -100,7 +100,22 @@ export const Cronjob = () => {
             header: t('NextRun'),
         },
         {
-            accessorKey: 'message'
+            accessorKey: 'message',
+            header: t('Message'),
+        },
+        {
+            accessorKey: 'max_tries',
+            header: t('MaxTries'),
+            titleOnCRUD: t('MaxTries'),
+            visible: false,
+            editable: true,
+        },
+        {
+            accessorKey: 'backoff',
+            header: t('Backoff'),
+            titleOnCRUD: t('Backoff'),
+            visible: false,
+            editable: true,
         },
         {
             id: 'edit_cron',

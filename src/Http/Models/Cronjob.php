@@ -17,15 +17,9 @@ class Cronjob extends Model
         'cron_expression',
     ];
 
-    public function getUpdatedAtAttribute($date)
-    {
-        $time = new DateTime($date);
-        return $time->format('Y-m-d H:i:s');
-    }
-
-    public function getCreatedAtAttribute($date)
-    {
-        $time = new DateTime($date);
-        return $time->format('Y-m-d H:i:s');
-    }
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+        'deleted_at' => 'datetime:Y-m-d H:i:s',
+    ];
 }

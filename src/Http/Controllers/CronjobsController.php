@@ -151,7 +151,7 @@ class CronjobsController extends Controller
 
     public function execute_pending_jobs()
     {
-        $dateNow = new DateTime();
+        $dateNow = now();
 
         $jobs = Cronjob::whereNotNull('next_run_at')->where('next_run_at', '<=', $dateNow)->get();
         logger("Executing kernel cronjob, current pending jobs: " . $jobs->count());
@@ -168,7 +168,13 @@ class CronjobsController extends Controller
 
     public function test()
     {
-        logger('Test logger ' . date('Y-m-d H:i:s'));
+        logger('Test ' . date('Y-m-d H:i:s'));
         return 0;
+    }
+
+    public function test_error()
+    {
+        logger('Test logger error ' . date('Y-m-d H:i:s'));
+        throw new Exception('Test exception ' . date('Y-m-d H:i:s'));
     }
 }

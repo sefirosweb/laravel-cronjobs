@@ -48,12 +48,14 @@ class ListCronjobs extends Command
             'controller',
             'last_run_at',
             'next_run_at',
+            'retries',
+            'time_between_retries',
             'cron_expression',
             DB::raw('IF(ISNULL(deleted_at), 1, 0) as active')
         ])->orderByDesc('active')->orderBy('next_run_at')->get();
 
         $this->table(
-            ['Name {job}', 'Description', 'Function', 'Controller', 'Last', 'Next', 'Cron', 'Active'],
+            ['Name {job}', 'Description', 'Function', 'Controller', 'Last', 'Next', 'Retries', 'Time Between Retries', 'Cron', 'Active'],
             $cronjobs
         );
     }

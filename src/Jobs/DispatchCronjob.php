@@ -18,6 +18,8 @@ class DispatchCronjob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected string $id;
+    public $tries = 1;
+    public $backoff = 60;
 
     /**
      * Create a new job instance.
@@ -27,6 +29,9 @@ class DispatchCronjob implements ShouldQueue
     public function __construct(Int $id)
     {
         $this->id = $id;
+        $cronjob = Cronjob::withTrashed()->findOrFail($this->id);
+        $this->tries = $cronjob->max_tries;
+        $this->backoff = $cronjob->backoff;
     }
 
     /**
@@ -37,31 +42,32 @@ class DispatchCronjob implements ShouldQueue
     public function handle()
     {
         $cronjob = Cronjob::withTrashed()->findOrFail($this->id);
+        logger("Executing job: " . $cronjob->name);
+        $app = app();
+        $controller = $app->make($cronjob->controller);
+        $controller->callAction($cronjob->function, $parameters = array());
+        logger("Finished job: " . $cronjob->name);
+        $cronjob->last_run_at = now();
+        $cronjob->message = '';
+        $cronjob->save();
+
         try {
-            logger("Executing job: " . $cronjob->name);
-            $app = app();
-            $controller = $app->make($cronjob->controller);
-            $controller->callAction($cronjob->function, $parameters = array());
-            logger("Finished job: " . $cronjob->name);
-            $cronjob->last_run_at = new DateTime();
-            $cronjob->message = '';
-            $cronjob->save();
-
-            try {
-                event(new DispatchCronjobSuccessfully($cronjob));
-            } catch (Throwable $e) {
-                logger($e->getMessage());
-            }
+            event(new DispatchCronjobSuccessfully($cronjob));
         } catch (Throwable $e) {
-            $cronjob->last_run_at = new DateTime();
-            $cronjob->message = $e->getMessage();
-            $cronjob->save();
+            logger($e->getMessage());
+        }
+    }
 
-            try {
-                event(new DispatchCronjobError($cronjob, $e->getMessage()));
-            } catch (Throwable $e) {
-                logger($e->getMessage());
-            }
+    public function failed(Throwable $exception)
+    {
+        try {
+            $cronjob = Cronjob::withTrashed()->findOrFail($this->id);
+            $cronjob->last_run_at = now();
+            $cronjob->message = $exception->getMessage();
+            $cronjob->save();
+            event(new DispatchCronjobError($cronjob, $exception->getMessage()));
+        } catch (Throwable $e) {
+            logger($e->getMessage());
         }
     }
 }

@@ -6,6 +6,8 @@ import path from 'path'
 export default defineConfig({
     base: '/vendor/laravel-cronjobs/',
     server: {
+        host: '0.0.0.0',
+        port: 5180,
         hmr: {
             host: 'localhost'
         },
