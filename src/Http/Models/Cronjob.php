@@ -15,6 +15,8 @@ class Cronjob extends Model
         'function',
         'controller',
         'cron_expression',
+        'backoff',
+        'max_tries',
     ];
 
     protected $casts = [

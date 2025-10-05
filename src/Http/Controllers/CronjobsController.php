@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use Cron\CronExpression;
-use DateTime;
 use Exception;
 use Sefirosweb\LaravelCronjobs\Http\Models\Cronjob;
 use Sefirosweb\LaravelCronjobs\Http\Requests\CronExpressionRequest;

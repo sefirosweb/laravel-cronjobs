@@ -45,6 +45,16 @@ class CronjobRequest extends FormRequest
                 'min:3',
                 'max:255',
             ],
+            'backoff' => [
+                'required',
+                'integer',
+                'min:0',
+            ],
+            'max_tries' => [
+                'required',
+                'integer',
+                'min:1',
+            ],
         ];
     }
 }
