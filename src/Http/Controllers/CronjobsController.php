@@ -167,13 +167,24 @@ class CronjobsController extends Controller
 
     public function test()
     {
-        logger('Test ' . date('Y-m-d H:i:s'));
+        logger('Test');
+        return 0;
+    }
+
+    public function test_timeout()
+    {
+        $startTime = now();
+        while (true) {
+            $timeTranscurred = now()->diffInSeconds($startTime);
+            logger('Test timeout: ' . $timeTranscurred);
+            sleep(1);
+        }
         return 0;
     }
 
     public function test_error()
     {
-        logger('Test logger error ' . date('Y-m-d H:i:s'));
-        throw new Exception('Test exception ' . date('Y-m-d H:i:s'));
+        logger('Test logger error');
+        throw new Exception('Test exception');
     }
 }

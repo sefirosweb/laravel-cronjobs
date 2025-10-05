@@ -2,7 +2,6 @@
 
 namespace Sefirosweb\LaravelCronjobs\Jobs;
 
-use DateTime;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -44,7 +43,7 @@ class DispatchCronjob implements ShouldQueue
     public function handle()
     {
         $cronjob = Cronjob::withTrashed()->findOrFail($this->id);
-        logger("Executing job: " . $cronjob->name);
+        logger("Executing job, timeout: " . $cronjob->timeout . ", max retries: " . $cronjob->max_tries . ", name: " . $cronjob->name);
         $app = app();
         $controller = $app->make($cronjob->controller);
         $controller->callAction($cronjob->function, $parameters = array());
