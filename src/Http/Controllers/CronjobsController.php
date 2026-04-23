@@ -175,7 +175,7 @@ class CronjobsController extends Controller
     {
         $startTime = now();
         while (true) {
-            $timeTranscurred = now()->diffInSeconds($startTime);
+            $timeTranscurred = (int) now()->diffInSeconds($startTime, true);
             logger('Test timeout: ' . $timeTranscurred);
             sleep(1);
         }

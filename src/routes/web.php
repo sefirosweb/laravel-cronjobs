@@ -1,25 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sefirosweb\LaravelCronjobs\Http\Controllers\CronjobsController;
 
-Route::group([
-    'namespace' => 'Sefirosweb\LaravelCronjobs\Http\Controllers'
-], function () {
-    // CRUD
-    Route::get('crud', 'CronjobsController@get');
-    Route::post('crud', 'CronjobsController@store');
-    Route::put('crud', 'CronjobsController@update');
-    Route::delete('crud', 'CronjobsController@destroy');
+// CRUD
+Route::get('crud', [CronjobsController::class, 'get']);
+Route::post('crud', [CronjobsController::class, 'store']);
+Route::put('crud', [CronjobsController::class, 'update']);
+Route::delete('crud', [CronjobsController::class, 'destroy']);
 
-    Route::post('preview_job', 'CronjobsController@preview_job');
-    Route::post('edit_cron_timer', 'CronjobsController@edit_cron_timer');
-    Route::post('execute_job', 'CronjobsController@execute_job');
+Route::post('preview_job', [CronjobsController::class, 'preview_job']);
+Route::post('edit_cron_timer', [CronjobsController::class, 'edit_cron_timer']);
+Route::post('execute_job', [CronjobsController::class, 'execute_job']);
 
-    Route::get('/', function () {
-        return view('cronjobs::index');
-    });
-
-    Route::get('{any}', function () {
-        return view('cronjobs::index');
-    })->where('any', '.*');
+Route::get('/', function () {
+    return view('cronjobs::index');
 });
+
+Route::get('{any}', function () {
+    return view('cronjobs::index');
+})->where('any', '.*');

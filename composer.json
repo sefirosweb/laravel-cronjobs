@@ -8,6 +8,11 @@
             "Sefirosweb\\LaravelCronjobs\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Sefirosweb\\LaravelCronjobs\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Sefirosweb",
@@ -16,7 +21,16 @@
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0",
         "dragonmantank/cron-expression": "^3.3.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     },
     "extra": {
         "laravel": {
