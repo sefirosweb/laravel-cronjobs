@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [12.0.3] - 2026-04-23
+
+### Added
+- GitHub Actions CI workflow (`.github/workflows/tests.yml`) running the phpunit suite against PHP 8.2 / 8.3 / 8.4 on every push / PR to `12.x`.
+
+No source changes in this release; version bumped to stay aligned with the rest of the `sefirosweb/laravel-*` 12.x release family.
+
 ## [12.0.2] - 2026-04-23
 
 ### Changed
