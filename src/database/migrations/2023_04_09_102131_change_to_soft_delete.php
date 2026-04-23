@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -7,12 +9,7 @@ use Sefirosweb\LaravelCronjobs\Http\Models\Cronjob;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::table('cronjobs', function (Blueprint $table) {
             $table->softDeletes()->after('next_run_at');
@@ -28,12 +25,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::table('cronjobs', function (Blueprint $table) {
             $table->boolean('is_active')->after('message');
