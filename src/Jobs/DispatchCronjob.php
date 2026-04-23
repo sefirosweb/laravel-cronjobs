@@ -16,17 +16,12 @@ class DispatchCronjob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected string $id;
-    public $tries = 1;
-    public $backoff = 60;
-    public $timeout = 120;
+    protected int $id;
+    public int $tries = 1;
+    public int $backoff = 60;
+    public int $timeout = 120;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(Int $id)
+    public function __construct(int $id)
     {
         $this->id = $id;
         $cronjob = Cronjob::withTrashed()->findOrFail($this->id);
@@ -35,18 +30,12 @@ class DispatchCronjob implements ShouldQueue
         $this->timeout = $cronjob->timeout;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    public function handle(): void
     {
         $cronjob = Cronjob::withTrashed()->findOrFail($this->id);
         logger("Executing job, timeout: " . $cronjob->timeout . ", max retries: " . $cronjob->max_tries . ", name: " . $cronjob->name);
-        $app = app();
-        $controller = $app->make($cronjob->controller);
-        $controller->callAction($cronjob->function, $parameters = array());
+        $controller = app()->make($cronjob->controller);
+        $controller->callAction($cronjob->function, []);
         logger("Finished job: " . $cronjob->name);
         $cronjob->last_run_at = now();
         $cronjob->message = '';
@@ -59,7 +48,7 @@ class DispatchCronjob implements ShouldQueue
         }
     }
 
-    public function failed(Throwable $exception)
+    public function failed(Throwable $exception): void
     {
         try {
             $cronjob = Cronjob::withTrashed()->findOrFail($this->id);

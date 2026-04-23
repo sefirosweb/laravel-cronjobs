@@ -23,12 +23,14 @@ class CronjobRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->input('cronjob_id', $this->input('id'));
+
         return [
             'name' => [
                 'required',
                 'min:3',
                 'max:255',
-                'unique:Sefirosweb\LaravelCronjobs\Http\Models\Cronjob,name,' . $this->id
+                'unique:Sefirosweb\LaravelCronjobs\Http\Models\Cronjob,name,' . $id,
             ],
             'description' => [
                 'required',

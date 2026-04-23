@@ -11,7 +11,10 @@
     "autoload-dev": {
         "psr-4": {
             "Sefirosweb\\LaravelCronjobs\\Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "tests/Fixtures"
+        ]
     },
     "authors": [
         {
