@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [12.0.2] - 2026-04-23
+
+### Changed
+- Enabled `declare(strict_types=1);` on every PHP file under `src/`. Tests (22/46) pass unchanged.
+- The four migrations' `/** @return void */` docblocks on `up()` / `down()` methods have been replaced with the native `: void` return type (PHP 7.1+). More concise, IDE-friendly, and enforced at runtime.
+- Fixed stray double semicolon `;;` in `create_cronjobs_table` migration.
+
 ## [12.0.1] - 2026-04-23
 
 ### Added
