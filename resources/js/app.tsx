@@ -4,8 +4,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useCronjobs } from '@/hooks/useCronjobs';
 import '@/lib/i18n';
 import { CronjobsView } from '@/pages/cronjobs/Cronjobs';
-import { QueueView } from '@/pages/queue/Queue';
+import { AppFooter } from '@/pages/layout/AppFooter';
 import { Tab, TopNav } from '@/pages/layout/TopNav';
+import { QueueView } from '@/pages/queue/Queue';
 import { ToastProvider } from '@/ui/Toast';
 import '@styles/app.scss';
 
@@ -48,6 +49,7 @@ const Shell = () => {
                 {tab === 'cronjobs' && <CronjobsView />}
                 {tab === 'queue' && <QueueView />}
             </main>
+            <AppFooter />
         </ToastProvider>
     );
 };

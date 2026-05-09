@@ -3,6 +3,11 @@ export const en = {
         appName: 'Cronjobs',
         cronjobs: 'Cronjobs',
         queue: 'Queue',
+        backToApp: 'Back to app',
+    },
+    footer: {
+        builtBy: 'Built by',
+        viewSource: 'View source on GitHub',
     },
     common: {
         save: 'Save changes',

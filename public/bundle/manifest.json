@@ -1,11 +1,11 @@
 {
   "resources/js/app.tsx": {
-    "file": "assets/app-CZTCvGPE.js",
+    "file": "assets/app-D19JRmne.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
     "css": [
-      "assets/app-Cf8Apcf2.css"
+      "assets/app-D0jn5B9l.css"
     ],
     "assets": [
       "assets/geist-latin-Dm3htQBi.woff2",

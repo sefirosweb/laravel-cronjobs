@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [13.0.2] - 2026-05-09
+
+### Added
+- **Back-to-app** arrow in the top nav. Returns the user to the host's `/` so the package UI no longer feels like a dead-end embedded site.
+- **Footer** with attribution and a link to the package repo on GitHub (`sefirosweb/laravel-cronjobs`).
+- New `IconArrowLeft` and `IconBrandGithub` icons.
+- Translations: `nav.backToApp`, `footer.builtBy`, `footer.viewSource` (ES + EN).
+
 ## [13.0.1] - 2026-05-09
 
 This release pairs the L13 alignment bump with a complete rewrite of the bundled admin UI. The package surface (routes, payloads, model, commands, scheduler hook) is unchanged, so upgrading is just a `composer update` + republish of `cronjobs-assets`.

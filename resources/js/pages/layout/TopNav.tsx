@@ -1,6 +1,11 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconLogo, IconSettings, IconRefresh } from '@/ui/icons';
+import {
+    IconArrowLeft,
+    IconLogo,
+    IconRefresh,
+    IconSettings,
+} from '@/ui/icons';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 export type Tab = 'cronjobs' | 'queue';
@@ -38,6 +43,14 @@ export const TopNav = ({ tab, onTab, counts }: TopNavProps) => {
     return (
         <nav className="top-nav">
             <div className="top-nav-inner">
+                <a
+                    className="nav-back"
+                    href="/"
+                    title={t('nav.backToApp')}
+                    aria-label={t('nav.backToApp')}
+                >
+                    <IconArrowLeft size={16} />
+                </a>
                 <div className="nav-brand">
                     <IconLogo size={22} />
                     <span>{t('nav.appName')}</span>
