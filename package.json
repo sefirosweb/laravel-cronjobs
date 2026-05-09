@@ -1,31 +1,29 @@
 {
     "name": "laravel-cronjobs",
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
-        "@sefirosweb/react-crud": "2.10.11",
-        "@tanstack/react-query": "^4.28.0",
-        "@tanstack/react-query-devtools": "^4.29.0",
-        "@types/node": "^18.15.11",
-        "@types/react-dom": "^18.0.11",
-        "@types/toastr": "^2.1.40",
-        "@vitejs/plugin-react": "^3.1.0",
-        "bootstrap": "5.2.3",
-        "country-flag-icons": "^1.5.7",
-        "i18next": "^22.4.14",
-        "i18next-browser-languagedetector": "^7.0.1",
-        "laravel-vite-plugin": "^0.7.4",
-        "react": "18.2.0",
-        "react-bootstrap": "2.7.2",
-        "react-dom": "^18.2.0",
-        "react-i18next": "^12.2.0",
-        "react-router-dom": "^6.10.0",
-        "sass": "^1.61.0",
-        "toastr": "^2.1.4",
-        "typescript": "^5.0.4",
-        "vite": "^4.2.1"
+        "@types/node": "^22.9.0",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "@vitejs/plugin-react": "^4.3.4",
+        "laravel-vite-plugin": "^1.2.0",
+        "sass": "^1.83.0",
+        "typescript": "^5.7.2",
+        "vite": "^6.0.7"
+    },
+    "dependencies": {
+        "@tanstack/react-query": "^5.62.16",
+        "axios": "^1.7.9",
+        "i18next": "^24.2.0",
+        "i18next-browser-languagedetector": "^8.0.2",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-i18next": "^15.4.0"
     }
 }

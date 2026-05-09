@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [13.0.1] - 2026-05-09
+
+This release pairs the L13 alignment bump with a complete rewrite of the bundled admin UI. The package surface (routes, payloads, model, commands, scheduler hook) is unchanged, so upgrading is just a `composer update` + republish of `cronjobs-assets`.
+
+### Added
+- **New admin UI** at `/cronjobs`. Rewritten on React 19 + TypeScript 5.7 + Vite 6 + TanStack Query 5 + i18next. The dependency on `react-bootstrap`, `@sefirosweb/react-crud`, `toastr`, `country-flag-icons` and `react-router-dom` is gone, the bundle is fully self-contained, and the design is mobile-responsive.
+  - Self-hosted Geist + Geist Mono fonts (no CDN, no external network calls).
+  - i18n with browser language detection + manual switcher in the top nav (ES / EN).
+  - Optimistic disable/enable toggle: `deleted_at` flips in cache immediately so the row's opacity / badge / action button update without flicker, with rollback on error.
+  - Hash routing (`#cronjobs` / `#queue`) — no router dependency, deep-linkable tabs.
+  - Soft-delete UI: *Activos / Todos / Desactivados* segmented filter on the listing; trashed rows show a "Desactivado" badge and an Activar (restore) action.
+  - Debounced search (200 ms) on the listing — searches across name, description, and controller.
+  - **Cron expression modal**: dedicated quick-edit modal (separate from the Edit drawer) with a live preview pane that hits `POST /preview_job` debounced on every keystroke, showing the next 40 firings of the expression. Includes a one-click cheat sheet of common patterns (`* * * * *`, `0 * * * *`, `0 0 * * *`, `0 0 * * 0`, `0 0 1 * *`).
+  - Per-action confirm modals for Run-now, Disable, Enable.
+  - Keyboard accessibility on dialogs (`ConfirmModal`, `Drawer`, `CronExpressionModal`): focus enters the dialog on open and is trapped via `Tab` / `Shift+Tab`; `Escape` closes; previous focus is restored on close.
+
+### Changed
+- The default-language landing tab is now `#cronjobs`. The previous `/queue` route is now a hash tab (`#queue`) and remains a placeholder (the queue inspection backend was never implemented in this package).
+- `package.json` rewritten: dropped `react-bootstrap`, `bootstrap`, `@sefirosweb/react-crud`, `toastr`, `country-flag-icons`, `react-router-dom`, `@tanstack/react-query-devtools`. Added `axios`, kept `@tanstack/react-query` (bumped to v5), `i18next` (bumped to v24), `react-i18next` (bumped to v15), `react` / `react-dom` (bumped to 19), TypeScript (^5.7), Vite (^6).
+- `tsconfig.json` rewritten with strict mode, `moduleResolution: bundler`, ES2022 target, `react-jsx` runtime.
+- `vite.config.ts` cleaned up — fixed alias to `@styles` and dropped the `fastRefresh: false` workaround.
+- `resources/sass/` removed; styles now live in `resources/styles/` as SCSS partials (`_globals`, `_layout`, `_components`, `_responsive`, `_fonts`).
+- README updated with new screenshots and a section on the new UI.
+
+### Removed
+- `resources/js/images/cron_expression.gif` — replaced by the inline cheat sheet of common cron patterns inside the new edit-cron modal.
+- All `react-bootstrap` and `react-crud` artifacts: `pages/Cronjob/{page,EditCronButton,DisableButton}.tsx`, the old `pages/Queue.tsx`, `pages/NotFound.tsx`, `pages/layout/{Layout,Navbar}.tsx`, `routes/{RoutesConfig,RoutesPages}.tsx`, `components/NavLink.tsx`, `lib/{axios.interceptors,toastrInstance}.ts`, `types/configurationType.ts`.
+
 ## [12.0.3] - 2026-04-23
 
 ### Added

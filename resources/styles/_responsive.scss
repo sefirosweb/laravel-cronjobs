@@ -1,0 +1,145 @@
+// Mobile-first responsive overrides. Targets phone-class viewports (<640px)
+// and small tablets (<900px) where the desktop layout breaks.
+
+// ------- Top nav -------
+@media (max-width: 900px) {
+    .top-nav-inner {
+        padding: 0 16px;
+        gap: 12px;
+        height: 52px;
+    }
+
+    .nav-tabs {
+        gap: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .nav-tab {
+        flex-shrink: 0;
+        padding: 0 10px;
+        font-size: 12.5px;
+    }
+
+    .nav-user span {
+        display: none;
+    }
+
+    .nav-user {
+        padding: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-brand span:not(.nav-brand-version) {
+        display: none;
+    }
+}
+
+// ------- Page header & toolbar -------
+@media (max-width: 640px) {
+    .page {
+        padding: 20px 14px 60px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+
+        .btn {
+            align-self: stretch;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+    }
+
+    .page-title-wrap h1 {
+        font-size: 20px;
+    }
+
+    .page-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+
+        .input-wrap {
+            max-width: none;
+        }
+    }
+}
+
+// ------- Tables: horizontal scroll wrapper -------
+@media (max-width: 900px) {
+    .card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table.t {
+        min-width: 720px; // forces horizontal scroll instead of squeezing
+    }
+}
+
+// ------- Table footer (pagination) -------
+@media (max-width: 640px) {
+    .table-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .table-footer-right {
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .pager-pos {
+        padding: 0 6px;
+        font-size: 12px;
+    }
+}
+
+// ------- Drawer: full-screen on phones -------
+@media (max-width: 640px) {
+    .drawer {
+        width: 100vw;
+        max-width: 100vw;
+    }
+
+    .drawer-header {
+        padding: 14px 16px;
+    }
+
+    .drawer-body {
+        padding: 16px;
+    }
+
+    .drawer-footer {
+        padding: 12px 16px;
+
+        .btn {
+            flex: 1;
+            justify-content: center;
+        }
+    }
+}
+
+// ------- Toasts: full-width on phones (still top-right anchored) -------
+@media (max-width: 480px) {
+    .toast-wrap {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+    }
+
+    .toast {
+        min-width: 0;
+        max-width: none;
+    }
+}

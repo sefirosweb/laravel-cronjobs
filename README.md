@@ -4,15 +4,15 @@ Database-driven cronjob manager for Laravel. Store jobs in MySQL, schedule each 
 
 ## Requirements
 
-- PHP `^8.2`
-- Laravel `^12.0`
+- PHP `^8.3`
+- Laravel `^13.0`
 - A running `schedule:work` process (so pending jobs get dispatched every minute).
 - A queue worker (`queue:work` / `queue:listen`) if you want jobs to actually run off the main process.
 
 ## Installation
 
 ```bash
-composer require sefirosweb/laravel-cronjobs:^12.0
+composer require sefirosweb/laravel-cronjobs:^13.0
 ```
 
 The service provider auto-registers via Laravel's package discovery.
@@ -56,6 +56,22 @@ Publish the React admin UI assets:
 ```bash
 php artisan vendor:publish --provider="Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider" --tag=cronjobs-assets --force
 ```
+
+## Admin UI
+
+Since v13.0.1 the bundled admin UI is a self-contained React 19 + TypeScript + Vite SPA. There are no `react-bootstrap` / `react-crud` / `toastr` dependencies anymore — the bundle is ~115 kB gzipped including self-hosted Geist fonts. Tabs are hash-routed (`#cronjobs`, `#queue`).
+
+| | |
+|---|---|
+| Cronjobs listing | ![Cronjobs list](docs/screenshots/cronjobs-list.png) |
+| Edit cron expression modal | ![Edit cron expression](docs/screenshots/cron-expression-modal.png) |
+| Run-now confirmation | ![Run now confirm](docs/screenshots/execute-confirm.png) |
+
+The cron-expression modal calls `POST /preview_job` debounced on every keystroke and shows the next 40 firings of the expression, so the admin can validate the schedule before saving. A one-click cheat sheet of common patterns (`* * * * *`, `0 * * * *`, `0 0 * * *`, `0 0 * * 0`, `0 0 1 * *`) is right under the input.
+
+The Disable / Enable toggle is optimistic: the row's `deleted_at` flips in cache immediately so the opacity, the "Desactivado" badge and the action buttons update without flicker, with rollback on error.
+
+The *Activos / Todos / Desactivados* segmented filter at the top of the listing maps directly to `?status=` on `GET /cronjobs/crud`, so the trashed rows are reachable without a SQL detour.
 
 ## Usage
 
